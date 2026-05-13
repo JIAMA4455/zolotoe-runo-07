@@ -2703,11 +2703,16 @@ h3 {
   top: calc(56% - 82px);
   width: clamp(170px, 22vw, 260px);
   height: clamp(140px, 18vw, 220px);
-  animation: sheep-image-run-in 1.2s cubic-bezier(.25, .1, .25, 1) forwards;
+  transition: right 1.2s cubic-bezier(.25, .1, .25, 1), transform 0.3s ease;
+  transform: translateY(0);
+}
+
+.opening-sheep.is-running-in {
+  right: var(--opening-sheep-stop-right, calc(82vw - (clamp(170px, 22vw, 260px) / 2)));
+  transform: translateY(10px);
 }
 
 .opening-sheep.is-sitting {
-  animation: none;
   right: var(--opening-sheep-stop-right, calc(82vw - (clamp(170px, 22vw, 260px) / 2)));
   transform: translateY(10px);
 }
@@ -2771,11 +2776,6 @@ h3 {
   animation: wool-to-logo-now 1.1s cubic-bezier(.2,.8,.18,1) forwards;
 }
 
-@keyframes sheep-image-run-in {
-  0% { right: -230px; transform: translateY(0) scale(1); }
-  100% { right: var(--opening-sheep-stop-right, calc(82vw - (clamp(170px, 22vw, 260px) / 2))); transform: translateY(10px) scale(1); }
-}
-
 @keyframes sheep-image-run-back {
   0% { right: var(--opening-sheep-stop-right, calc(82vw - (clamp(170px, 22vw, 260px) / 2))); transform: translateY(10px) scale(1); opacity: 1; }
   100% { right: -260px; transform: translateY(0) scale(1); opacity: 1; }
@@ -2809,14 +2809,14 @@ h3 {
     height: clamp(125px, 39vw, 175px);
   }
 
-  .opening-sheep.is-sitting {
+  .opening-sheep.is-running-in {
     right: var(--opening-sheep-stop-right, calc(50vw - (clamp(150px, 48vw, 210px) / 2)));
     transform: translateY(10px);
   }
 
-  @keyframes sheep-image-run-in {
-    0% { right: -230px; transform: translateY(0) scale(1); }
-    100% { right: var(--opening-sheep-stop-right, calc(50vw - (clamp(150px, 48vw, 210px) / 2))); transform: translateY(10px) scale(1); }
+  .opening-sheep.is-sitting {
+    right: var(--opening-sheep-stop-right, calc(50vw - (clamp(150px, 48vw, 210px) / 2)));
+    transform: translateY(10px);
   }
 
   @keyframes sheep-image-run-back {
