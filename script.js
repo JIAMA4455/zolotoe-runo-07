@@ -505,19 +505,25 @@ document.addEventListener("DOMContentLoaded", () => {
       openingSheepImage.src = frame;
     };
 
-    setOpeningGeometry();
-    cycleSheepFrames(runInFrames);
+    // Ждём загрузки ключевых картинок перед стартом анимации
+    const preloadImages = [...runInFrames, sittingFrame, turnedFrame, ...runBackFrames];
+    let loadedCount = 0;
+    const totalToLoad = preloadImages.length;
 
-    window.setTimeout(() => {
-      openingSheep?.classList.add("is-sitting");
-      setSheepFrame(sittingFrame);
-    }, 1500);
+    function startAnimation() {
+      setOpeningGeometry();
+      cycleSheepFrames(runInFrames);
 
-    window.setTimeout(() => {
-      openingSheep?.classList.add("is-shearing");
-      openingLoader.classList.add("is-shearing");
-      setSheepFrame(sittingFrame);
-    }, 1870);
+      window.setTimeout(() => {
+        openingSheep?.classList.add("is-sitting");
+        setSheepFrame(sittingFrame);
+      }, 1500);
+
+      window.setTimeout(() => {
+        openingSheep?.classList.add("is-shearing");
+        openingLoader.classList.add("is-shearing");
+        setSheepFrame(sittingFrame);
+      }, 1870);
 
     window.setTimeout(() => {
       setSheepFrame(turnedFrame);
@@ -543,6 +549,22 @@ document.addEventListener("DOMContentLoaded", () => {
     window.setTimeout(() => {
       openingLoader.remove();
     }, 8100);
+    } // end startAnimation
+
+    // Предзагрузка картинок, потом старт
+    preloadImages.forEach(src => {
+      const img = new Image();
+      img.onload = img.onerror = () => {
+        loadedCount++;
+        if (loadedCount >= totalToLoad) startAnimation();
+      };
+      img.src = src;
+    });
+    // Фоллбэк — если за 4 сек не загрузились, стартуем всё равно
+    window.setTimeout(() => {
+      if (loadedCount < totalToLoad) startAnimation();
+    }, 4000);
+
   } else {
     document.body.classList.remove("is-loading");
   }
