@@ -1,10 +1,7 @@
 User-agent: *
 Allow: /
-Disallow: /backup_before_redesign/
-Disallow: /backup_before_visual/
-Disallow: /backup_before_visual_improvements/
-Disallow: /backup_2025_05_11/
+Disallow: /admin.html
+Disallow: /admin.css
+Disallow: /admin.js
 
-Sitemap: https://zolotoe-runo07.ru/sitemap.xml
-
-Host: zolotoe-runo07.ru
+Sitemap: https://zolotoe-runo-07.ru/sitemap.xml
