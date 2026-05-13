@@ -434,15 +434,15 @@ document.addEventListener("DOMContentLoaded", () => {
     const openingSheep = openingLoader.querySelector(".opening-sheep");
     const openingSheepImage = document.querySelector("#openingSheepImage");
     const runInFrames = [
-      "assets/sheep-run-1.png",
-      "assets/sheep-run-2.png",
+      "assets/sheep-run-1.webp",
+      "assets/sheep-run-2.webp",
     ];
     const runBackFrames = [
-      "assets/sheep-back-1.png",
-      "assets/sheep-back-2.png",
+      "assets/sheep-back-1.webp",
+      "assets/sheep-back-2.webp",
     ];
-    const sittingFrame = "assets/sheep-sitting.png";
-    const turnedFrame = "assets/sheep-turned.png";
+    const sittingFrame = "assets/sheep-sitting.webp";
+    const turnedFrame = "assets/sheep-turned.webp";
     let sheepFrameTimer;
 
     const setOpeningGeometry = () => {
