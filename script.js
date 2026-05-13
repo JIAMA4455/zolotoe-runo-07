@@ -514,41 +514,48 @@ document.addEventListener("DOMContentLoaded", () => {
       setOpeningGeometry();
       cycleSheepFrames(runInFrames);
 
+      // 0-1.2s: овца бежит
+      // 1.2s: села
       window.setTimeout(() => {
         openingSheep?.classList.add("is-sitting");
         setSheepFrame(sittingFrame);
-      }, 2000);
+      }, 1200);
 
+      // 1.4s: стрижка начинается
       window.setTimeout(() => {
         openingSheep?.classList.add("is-shearing");
         openingLoader.classList.add("is-shearing");
-        setSheepFrame(sittingFrame);
-      }, 2400);
+      }, 1400);
 
-    window.setTimeout(() => {
-      setSheepFrame(turnedFrame);
-    }, 3200);
+      // 2.0s: повернулась
+      window.setTimeout(() => {
+        setSheepFrame(turnedFrame);
+      }, 2000);
 
-    window.setTimeout(() => {
-      openingSheep?.classList.remove("is-sitting", "is-shearing");
-      openingSheep?.classList.add("is-running-back");
-      cycleSheepFrames(runBackFrames);
-      openingLoader.classList.add("is-logo-ready");
-    }, 4200);
+      // 2.5s: убегает + логотип
+      window.setTimeout(() => {
+        openingSheep?.classList.remove("is-sitting", "is-shearing");
+        openingSheep?.classList.add("is-running-back");
+        cycleSheepFrames(runBackFrames);
+        openingLoader.classList.add("is-logo-ready");
+      }, 2500);
 
-    window.setTimeout(() => {
-      morphLogoToHero();
-    }, 6100);
+      // 3.5s: морфинг логотипа
+      window.setTimeout(() => {
+        morphLogoToHero();
+      }, 3500);
 
-    window.setTimeout(() => {
-      window.clearInterval(sheepFrameTimer);
-      openingLoader.classList.add("is-done");
-      document.body.classList.remove("is-loading");
-    }, 7700);
+      // 4.0s: конец — убираем loader
+      window.setTimeout(() => {
+        window.clearInterval(sheepFrameTimer);
+        openingLoader.classList.add("is-done");
+        document.body.classList.remove("is-loading");
+      }, 4000);
 
-    window.setTimeout(() => {
-      openingLoader.remove();
-    }, 8600);
+      // 4.7s: удаляем из DOM
+      window.setTimeout(() => {
+        openingLoader.remove();
+      }, 4700);
     } // end startAnimation
 
     // Предзагрузка картинок, потом старт

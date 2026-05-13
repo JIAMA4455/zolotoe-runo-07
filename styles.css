@@ -2703,7 +2703,7 @@ h3 {
   top: calc(56% - 82px);
   width: clamp(170px, 22vw, 260px);
   height: clamp(140px, 18vw, 220px);
-  animation: sheep-image-run-in 2s cubic-bezier(.25, .1, .25, 1) forwards;
+  animation: sheep-image-run-in 1.2s cubic-bezier(.25, .1, .25, 1) forwards;
 }
 
 .opening-sheep.is-sitting {
@@ -2712,7 +2712,7 @@ h3 {
 }
 
 .opening-sheep.is-running-back {
-  animation: sheep-image-run-back 2.1s linear forwards;
+  animation: sheep-image-run-back 1.2s ease-in forwards;
 }
 
 .opening-sheep-image {
@@ -2759,7 +2759,7 @@ h3 {
 }
 
 .opening-loader.is-shearing .shear-burst::before {
-  animation: shears-snip-now 1.75s ease forwards;
+  animation: shears-snip-now 1s ease forwards;
 }
 
 .shear-burst span {
@@ -2767,7 +2767,7 @@ h3 {
 }
 
 .opening-loader.is-shearing .shear-burst span {
-  animation: wool-to-logo-now 1.8s cubic-bezier(.2,.8,.18,1) forwards;
+  animation: wool-to-logo-now 1.1s cubic-bezier(.2,.8,.18,1) forwards;
 }
 
 @keyframes sheep-image-run-in {
