@@ -496,7 +496,7 @@ document.addEventListener("DOMContentLoaded", () => {
       sheepFrameTimer = window.setInterval(() => {
         frameIndex = (frameIndex + 1) % frames.length;
         openingSheepImage.src = frames[frameIndex];
-      }, 300);
+      }, 400);
     };
 
     const setSheepFrame = (frame) => {
@@ -517,38 +517,38 @@ document.addEventListener("DOMContentLoaded", () => {
       window.setTimeout(() => {
         openingSheep?.classList.add("is-sitting");
         setSheepFrame(sittingFrame);
-      }, 1500);
+      }, 2000);
 
       window.setTimeout(() => {
         openingSheep?.classList.add("is-shearing");
         openingLoader.classList.add("is-shearing");
         setSheepFrame(sittingFrame);
-      }, 1870);
+      }, 2400);
 
     window.setTimeout(() => {
       setSheepFrame(turnedFrame);
-    }, 2670);
+    }, 3200);
 
     window.setTimeout(() => {
       openingSheep?.classList.remove("is-sitting", "is-shearing");
       openingSheep?.classList.add("is-running-back");
       cycleSheepFrames(runBackFrames);
       openingLoader.classList.add("is-logo-ready");
-    }, 3670);
+    }, 4200);
 
     window.setTimeout(() => {
       morphLogoToHero();
-    }, 5620);
+    }, 6100);
 
     window.setTimeout(() => {
       window.clearInterval(sheepFrameTimer);
       openingLoader.classList.add("is-done");
       document.body.classList.remove("is-loading");
-    }, 7200);
+    }, 7700);
 
     window.setTimeout(() => {
       openingLoader.remove();
-    }, 8100);
+    }, 8600);
     } // end startAnimation
 
     // Предзагрузка картинок, потом старт
