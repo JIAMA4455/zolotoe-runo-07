@@ -41,7 +41,7 @@ body.is-loading {
   overflow: hidden;
   background:
     linear-gradient(135deg, rgba(255, 247, 228, 0.25), rgba(229, 184, 108, 0.18)),
-    url("assets/animation-bg.png") center bottom / auto 104% no-repeat,
+    url("assets/animation-bg.jpg") center bottom / auto 104% no-repeat,
     #f4ddb1;
   opacity: 1;
   visibility: visible;
