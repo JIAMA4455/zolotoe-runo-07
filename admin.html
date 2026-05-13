@@ -1,0 +1,137 @@
+<!doctype html>
+<html lang="ru">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="robots" content="noindex, nofollow" />
+    <title>Админка — Золотое руно 07</title>
+    <link rel="icon" type="image/png" href="assets/logo-circle.png" />
+    <link rel="stylesheet" href="admin.css" />
+  </head>
+  <body>
+    <!-- Экран входа -->
+    <div class="login-screen" id="loginScreen">
+      <div class="login-card">
+        <img src="assets/logo-circle.png" alt="" class="login-logo" />
+        <h1>Админка</h1>
+        <p>Золотое руно 07</p>
+        <form id="loginForm">
+          <input type="password" id="passwordInput" placeholder="Пароль" required autofocus />
+          <button type="submit">Войти</button>
+          <p class="login-error" id="loginError"></p>
+        </form>
+      </div>
+    </div>
+
+    <!-- Основной интерфейс -->
+    <div class="admin-app" id="adminApp" style="display: none;">
+      <header class="admin-header">
+        <div class="admin-brand">
+          <img src="assets/logo-circle.png" alt="" />
+          <div>
+            <h1>Админ-панель</h1>
+            <p>Золотое руно 07</p>
+          </div>
+        </div>
+        <div class="admin-actions">
+          <a href="/" class="ghost-btn" target="_blank">👁 Открыть сайт</a>
+          <button class="ghost-btn" id="logoutBtn">↗ Выйти</button>
+        </div>
+      </header>
+
+      <main class="admin-main">
+        <div class="admin-tabs">
+          <button class="admin-tab active" data-tab="products">Товары</button>
+          <button class="admin-tab" data-tab="wants">Запросы «Хочу»</button>
+        </div>
+
+        <div class="tab-content" id="tabProducts">
+          <div class="admin-toolbar">
+            <h2>Товары</h2>
+            <button class="primary-btn" id="addProductBtn">+ Добавить товар</button>
+          </div>
+          <div class="product-list" id="productList"></div>
+        </div>
+
+        <div class="tab-content" id="tabWants" style="display: none;">
+          <div class="admin-toolbar">
+            <h2>Запросы «Хочу»</h2>
+          </div>
+          <div class="wants-list" id="wantsList">
+            <p style="color: var(--muted);">Загрузка...</p>
+          </div>
+        </div>
+
+        <p class="status-note" id="statusNote"></p>
+      </main>
+    </div>
+
+    <!-- Шаблон карточки товара -->
+    <template id="productCardTemplate">
+      <div class="product-edit">
+        <div class="product-edit-image">
+          <img class="edit-preview" src="" alt="" />
+          <label class="upload-btn">
+            📷 Загрузить фото
+            <input type="file" accept="image/jpeg,image/png,image/webp" hidden />
+          </label>
+        </div>
+        <div class="product-edit-fields">
+          <div class="field-row">
+            <label>
+              <span>ID</span>
+              <input type="text" data-field="id" />
+            </label>
+            <label>
+              <span>Порода</span>
+              <select data-field="breed">
+                <option value="Кроссбред">Кроссбред</option>
+                <option value="Меринос">Меринос</option>
+                <option value="Набор">Набор</option>
+              </select>
+            </label>
+          </div>
+          <div class="field-row">
+            <label>
+              <span>Тип</span>
+              <input type="text" data-field="type" />
+            </label>
+            <label>
+              <span>Цвет</span>
+              <input type="text" data-field="color" />
+            </label>
+          </div>
+          <div class="field-row">
+            <label>
+              <span>Микрон</span>
+              <input type="text" data-field="microns" />
+            </label>
+            <label>
+              <span>Цена (₽)</span>
+              <input type="number" data-field="price" />
+            </label>
+            <label>
+              <span>Граммовка (г)</span>
+              <input type="number" data-field="weight" value="500" />
+            </label>
+          </div>
+          <div class="field-row field-row-full">
+            <label>
+              <span>Описание</span>
+              <textarea data-field="description" rows="3" placeholder="Описание товара..."></textarea>
+            </label>
+          </div>
+          <div class="field-row field-row-controls">
+            <label class="checkbox-field">
+              <input type="checkbox" data-field="available" />
+              <span>В наличии</span>
+            </label>
+            <button class="danger-btn delete-btn" type="button">🗑 Удалить</button>
+          </div>
+        </div>
+      </div>
+    </template>
+
+    <script src="admin.js"></script>
+  </body>
+</html>
