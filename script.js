@@ -517,48 +517,47 @@ document.addEventListener("DOMContentLoaded", () => {
       setOpeningGeometry();
       cycleSheepFrames(runInFrames);
 
-      // 0-1.2s: овца бежит
-      // 1.2s: села
+      // 1.5s: овца добежала, села
       window.setTimeout(() => {
         openingSheep?.classList.add("is-sitting");
         setSheepFrame(sittingFrame);
-      }, 1200);
+      }, 1500);
 
-      // 1.4s: стрижка начинается
+      // 1.8s: стрижка
       window.setTimeout(() => {
         openingSheep?.classList.add("is-shearing");
         openingLoader.classList.add("is-shearing");
-      }, 1400);
+      }, 1800);
 
-      // 2.0s: повернулась
+      // 2.6s: повернулась
       window.setTimeout(() => {
         setSheepFrame(turnedFrame);
-      }, 2000);
+      }, 2600);
 
-      // 2.5s: убегает + логотип
+      // 3.2s: убегает + логотип появляется
       window.setTimeout(() => {
         openingSheep?.classList.remove("is-sitting", "is-shearing");
         openingSheep?.classList.add("is-running-back");
         cycleSheepFrames(runBackFrames);
         openingLoader.classList.add("is-logo-ready");
-      }, 2500);
+      }, 3200);
 
-      // 3.5s: морфинг логотипа
+      // 4.2s: морфинг логотипа
       window.setTimeout(() => {
         morphLogoToHero();
-      }, 3500);
+      }, 4200);
 
-      // 4.0s: конец — убираем loader
+      // 5.0s: конец
       window.setTimeout(() => {
         window.clearInterval(sheepFrameTimer);
         openingLoader.classList.add("is-done");
         document.body.classList.remove("is-loading");
-      }, 4000);
+      }, 5000);
 
-      // 4.7s: удаляем из DOM
+      // 5.7s: удаляем из DOM
       window.setTimeout(() => {
         openingLoader.remove();
-      }, 4700);
+      }, 5700);
     } // end startAnimation
 
     // Предзагрузка картинок, потом старт
