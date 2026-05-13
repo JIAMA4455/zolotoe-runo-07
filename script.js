@@ -181,7 +181,10 @@ function renderProducts(filter = "all") {
       return `
         <article class="product-card" data-breed="${product.breed}" data-id="${product.id}">
           <div class="product-image-wrap" data-open-modal="${product.id}">
-            <img class="product-image" src="${product.image}" alt="${product.breed}, ${product.type}, цвет ${product.color}" loading="lazy" />
+            <picture>
+              <source srcset="${product.image.replace(/\.jpe?g$/i, '.webp')}" type="image/webp" />
+              <img class="product-image" src="${product.image}" alt="${product.breed}, ${product.type}, цвет ${product.color}" loading="lazy" />
+            </picture>
             <span class="status ${statusClass}">${statusText}</span>
           </div>
           <div class="product-body">
@@ -284,6 +287,57 @@ function renderProducts(filter = "all") {
       openProductModal(id);
     });
   });
+
+  injectProductSchema();
+}
+
+// --- SEO: Schema.org Product для всех товаров ---
+function injectProductSchema() {
+  const SITE_URL = "https://zolotoe-runo-07.ru";
+  const itemListElements = products.map((product, index) => ({
+    "@type": "ListItem",
+    "position": index + 1,
+    "item": {
+      "@type": "Product",
+      "name": `${product.breed}, ${product.type}, ${product.color}`,
+      "description": `${product.breed} ${product.type.toLowerCase()}, цвет ${product.color}, тонина ${product.microns} микрон. Натуральная шерсть от производителя.`,
+      "image": `${SITE_URL}/${product.image}`,
+      "sku": product.id,
+      "brand": {
+        "@type": "Brand",
+        "name": "Золотое руно 07"
+      },
+      "offers": {
+        "@type": "Offer",
+        "url": `${SITE_URL}/#${product.id}`,
+        "priceCurrency": "RUB",
+        "price": product.price,
+        "availability": product.available
+          ? "https://schema.org/InStock"
+          : "https://schema.org/OutOfStock",
+        "seller": {
+          "@type": "Organization",
+          "name": "Золотое руно 07"
+        }
+      }
+    }
+  }));
+
+  const schema = {
+    "@context": "https://schema.org",
+    "@type": "ItemList",
+    "name": "Ассортимент шерсти Золотое руно 07",
+    "itemListElement": itemListElements
+  };
+
+  let scriptEl = document.getElementById("product-schema");
+  if (!scriptEl) {
+    scriptEl = document.createElement("script");
+    scriptEl.type = "application/ld+json";
+    scriptEl.id = "product-schema";
+    document.head.appendChild(scriptEl);
+  }
+  scriptEl.textContent = JSON.stringify(schema);
 }
 
 // --- Модалка товара ---

@@ -6,7 +6,8 @@
   "scripts": {
     "start": "node server.js",
     "dev": "node server.js",
-    "test": "playwright test"
+    "test": "playwright test",
+    "optimize": "node scripts/optimize-images.mjs"
   },
   "keywords": [
     "wool",
