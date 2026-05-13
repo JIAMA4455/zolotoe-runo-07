@@ -496,7 +496,7 @@ document.addEventListener("DOMContentLoaded", () => {
       sheepFrameTimer = window.setInterval(() => {
         frameIndex = (frameIndex + 1) % frames.length;
         openingSheepImage.src = frames[frameIndex];
-      }, 400);
+      }, 350);
     };
 
     const setSheepFrame = (frame) => {
@@ -505,12 +505,15 @@ document.addEventListener("DOMContentLoaded", () => {
       openingSheepImage.src = frame;
     };
 
-    // Ждём загрузки ключевых картинок перед стартом анимации
-    const preloadImages = [...runInFrames, sittingFrame, turnedFrame, ...runBackFrames];
+    // Ждём загрузки ключевых картинок + фона перед стартом анимации
+    const preloadImages = [...runInFrames, sittingFrame, turnedFrame, ...runBackFrames, "assets/animation-bg.jpg"];
     let loadedCount = 0;
     const totalToLoad = preloadImages.length;
+    let animationStarted = false;
 
     function startAnimation() {
+      if (animationStarted) return;
+      animationStarted = true;
       setOpeningGeometry();
       cycleSheepFrames(runInFrames);
 

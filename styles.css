@@ -2709,6 +2709,7 @@ h3 {
 .opening-sheep.is-sitting {
   animation: none;
   right: var(--opening-sheep-stop-right, calc(82vw - (clamp(170px, 22vw, 260px) / 2)));
+  transform: translateY(10px);
 }
 
 .opening-sheep.is-running-back {
@@ -2810,6 +2811,7 @@ h3 {
 
   .opening-sheep.is-sitting {
     right: var(--opening-sheep-stop-right, calc(50vw - (clamp(150px, 48vw, 210px) / 2)));
+    transform: translateY(10px);
   }
 
   @keyframes sheep-image-run-in {
