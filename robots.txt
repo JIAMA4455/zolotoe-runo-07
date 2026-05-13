@@ -3,5 +3,11 @@ Allow: /
 Disallow: /admin.html
 Disallow: /admin.css
 Disallow: /admin.js
+Disallow: /backup_before_redesign/
+Disallow: /backup_before_visual/
+Disallow: /backup_before_visual_improvements/
+Disallow: /backup_2025_05_11/
 
 Sitemap: https://zolotoe-runo-07.ru/sitemap.xml
+
+Host: zolotoe-runo-07.ru
