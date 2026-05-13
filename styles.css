@@ -2708,7 +2708,7 @@ h3 {
 
 .opening-sheep.is-sitting {
   animation: none;
-  right: var(--opening-sheep-stop-right, calc(82vw - (clamp(170px, 22vw, 260px) / 2)));
+  right: var(--opening-sheep-stop-right);
 }
 
 .opening-sheep.is-running-back {
@@ -2772,11 +2772,11 @@ h3 {
 
 @keyframes sheep-image-run-in {
   0% { right: -230px; }
-  100% { right: var(--opening-sheep-stop-right, calc(82vw - (clamp(170px, 22vw, 260px) / 2))); }
+  100% { right: var(--opening-sheep-stop-right); }
 }
 
 @keyframes sheep-image-run-back {
-  0% { right: var(--opening-sheep-stop-right, calc(82vw - (clamp(170px, 22vw, 260px) / 2))); opacity: 1; }
+  0% { right: var(--opening-sheep-stop-right); opacity: 1; }
   100% { right: -260px; opacity: 1; }
 }
 
@@ -2809,20 +2809,20 @@ h3 {
   }
 
   .opening-sheep.is-running-in {
-    right: var(--opening-sheep-stop-right, calc(50vw - (clamp(150px, 48vw, 210px) / 2)));
+    right: var(--opening-sheep-stop-right);
   }
 
   .opening-sheep.is-sitting {
-    right: var(--opening-sheep-stop-right, calc(50vw - (clamp(150px, 48vw, 210px) / 2)));
+    right: var(--opening-sheep-stop-right);
   }
 
   @keyframes sheep-image-run-in {
     0% { right: -230px; }
-    100% { right: var(--opening-sheep-stop-right, calc(50vw - (clamp(150px, 48vw, 210px) / 2))); }
+    100% { right: var(--opening-sheep-stop-right); }
   }
 
   @keyframes sheep-image-run-back {
-    0% { right: var(--opening-sheep-stop-right, calc(50vw - (clamp(150px, 48vw, 210px) / 2))); opacity: 1; }
+    0% { right: var(--opening-sheep-stop-right); opacity: 1; }
     100% { right: -260px; opacity: 1; }
   }
 }
