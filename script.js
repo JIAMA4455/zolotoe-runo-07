@@ -515,11 +515,6 @@ document.addEventListener("DOMContentLoaded", () => {
       if (animationStarted) return;
       animationStarted = true;
       setOpeningGeometry();
-      
-      // Запускаем бег: добавляем класс через 1 кадр чтобы transition сработал
-      window.requestAnimationFrame(() => {
-        openingSheep?.classList.add("is-running-in");
-      });
       cycleSheepFrames(runInFrames);
 
       // 0-1.2s: овца бежит
