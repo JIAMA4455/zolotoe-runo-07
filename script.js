@@ -731,6 +731,12 @@ document.addEventListener("DOMContentLoaded", () => {
 
     worksCounter.textContent = `${activeWorkIndex + 1} / ${works.length}`;
     worksProgress.style.width = `${((activeWorkIndex + 1) / works.length) * 100}%`;
+
+    // Предзагрузка +2 и -2 фото вперёд
+    const preload1 = (activeWorkIndex + 2) % works.length;
+    const preload2 = (activeWorkIndex - 2 + works.length) % works.length;
+    new Image().src = works[preload1].image;
+    new Image().src = works[preload2].image;
   }
 
   updateWorks();
