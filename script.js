@@ -443,7 +443,7 @@ function renderCart() {
   const totalWeight = cart.reduce((sum, item) => sum + item.qty * (item.weight || 500), 0);
   const totalPrice = cart.reduce((sum, item) => sum + item.qty * item.price, 0);
   cartCount.textContent = cart.length;
-  cartTotal.innerHTML = `${totalWeight} г &mdash; <strong>${totalPrice} ₽</strong>`;
+  cartTotal.innerHTML = `${totalWeight} г &mdash; <strong>${totalPrice} ₽</strong> + стоимость доставки`;
 }
 
 // Собирает финальный текст заказа для копирования/отправки в мессенджеры
@@ -451,9 +451,6 @@ function buildOrderText() {
   const customerNameValue = (customerName?.value || "").trim();
   const commentValue = (orderText?.value || "").trim();
   const deliveryValue = delivery?.value || "";
-  const deliveryPriceEl = document.querySelector("#deliveryPrice");
-  const deliveryPriceRaw = deliveryPriceEl?.value;
-  const deliveryPrice = Number.parseFloat(deliveryPriceRaw);
 
   let text = "Здравствуйте.\n";
   if (customerNameValue) {
@@ -472,14 +469,10 @@ function buildOrderText() {
 
   const totalWeight = cart.reduce((sum, item) => sum + item.qty * (item.weight || 500), 0);
   const totalPrice = cart.reduce((sum, item) => sum + item.qty * item.price, 0);
-  text += `\nИтого: ${totalWeight} г — ${totalPrice} ₽\n`;
+  text += `\nИтого: ${totalWeight} г — ${totalPrice} ₽ + стоимость доставки\n`;
 
   if (deliveryValue) {
-    text += `\nДоставка: ${deliveryValue}`;
-    if (Number.isFinite(deliveryPrice) && deliveryPrice > 0) {
-      text += ` — ${deliveryPrice} ₽`;
-    }
-    text += "\n";
+    text += `\nДоставка: ${deliveryValue}\n`;
 
     // Дополнительные поля выбранной доставки (телефоны, адреса и т.д.)
     if (deliveryTemplates[deliveryValue]) {
@@ -491,10 +484,6 @@ function buildOrderText() {
         }
       });
     }
-  }
-
-  if (Number.isFinite(deliveryPrice) && deliveryPrice > 0) {
-    text += `\nК оплате с доставкой: ${totalPrice + deliveryPrice} ₽\n`;
   }
 
   if (commentValue) {
