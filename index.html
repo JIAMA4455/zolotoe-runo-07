@@ -68,7 +68,7 @@
     }
     </script>
 
-    <link rel="stylesheet" href="styles.css?v=sheep-opening-23" />
+    <link rel="stylesheet" href="styles.css?v=order-preview-1" />
   </head>
   <body class="is-loading">
     <script>window.scrollTo(0,0);</script>
@@ -353,8 +353,14 @@
               <h4 class="form-section-title">Сообщение</h4>
               <label>
                 Комментарий к заказу
-                <textarea id="orderText" rows="5" placeholder="Укажите удобный способ связи, адрес или пожелания..."></textarea>
+                <textarea id="orderText" rows="3" placeholder="Укажите пожелания к заказу..."></textarea>
               </label>
+            </div>
+
+            <div class="form-section">
+              <h4 class="form-section-title">📋 Текст вашего заказа</h4>
+              <p class="order-preview-hint">Это сообщение будет отправлено или скопировано при нажатии на кнопку выше</p>
+              <textarea class="order-preview" id="orderPreview" rows="10" readonly></textarea>
             </div>
           </form>
         </div>
@@ -446,6 +452,6 @@
 
     <button class="scroll-top" id="scrollTop" aria-label="Наверх">↑</button>
 
-    <script src="script.js?v=schema-webp-1"></script>
+    <script src="script.js?v=order-preview-1"></script>
   </body>
 </html>

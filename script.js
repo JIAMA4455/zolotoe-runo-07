@@ -509,13 +509,21 @@ function updateOrderText() {
         ([id, placeholder]) => `
         <label>
           ${placeholder}
-          <input id="${id}" type="text" placeholder="${placeholder}" data-delivery-field="">
+          <input id="${id}" type="text" placeholder="${placeholder}" data-delivery-field="" oninput="updateOrderPreview()">
         </label>
       `
       )
       .join("");
   } else {
     deliveryFields.innerHTML = "";
+  }
+  updateOrderPreview();
+}
+
+function updateOrderPreview() {
+  const preview = document.querySelector("#orderPreview");
+  if (preview) {
+    preview.value = buildOrderText();
   }
 }
 
@@ -704,6 +712,10 @@ document.addEventListener("DOMContentLoaded", () => {
 
   // Обработчик для выбора доставки
   delivery.addEventListener("change", updateOrderText);
+
+  // Обновлять превью при вводе имени или комментария
+  customerName?.addEventListener("input", updateOrderPreview);
+  orderText?.addEventListener("input", updateOrderPreview);
 
   // Обработчик для кнопки копирования
   document.querySelector("#copyOrder")?.addEventListener("click", () => {

@@ -1837,6 +1837,29 @@ h3 {
   font-size: 16px;
 }
 
+.order-preview {
+  width: 100%;
+  min-height: 180px;
+  resize: vertical;
+  line-height: 1.6;
+  font-size: 14px;
+  font-family: inherit;
+  padding: 16px;
+  border: 1px solid rgba(184, 131, 53, 0.2);
+  border-radius: 12px;
+  background: rgba(184, 131, 53, 0.03);
+  color: var(--text);
+  cursor: default;
+  white-space: pre-wrap;
+  word-wrap: break-word;
+}
+
+.order-preview-hint {
+  margin: 0 0 10px;
+  font-size: 13px;
+  color: rgba(90, 60, 20, 0.6);
+}
+
 /* Footer */
 .site-footer {
   background:
