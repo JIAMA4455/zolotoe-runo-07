@@ -167,6 +167,13 @@ app.post("/api/upload", requireAuth, (req, res, next) => {
       .jpeg({ quality: 92 })
       .toFile(outputPath);
 
+    // Создать WebP-версию рядом
+    const webpName = outputName.replace(/\.jpg$/, ".webp");
+    const webpPath = path.join(UPLOAD_DIR, webpName);
+    await sharp(outputPath)
+      .webp({ quality: 78 })
+      .toFile(webpPath);
+
     // Удалить оригинал если он отличается
     if (inputPath !== outputPath) {
       fs.unlinkSync(inputPath);

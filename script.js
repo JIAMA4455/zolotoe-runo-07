@@ -181,10 +181,7 @@ function renderProducts(filter = "all") {
       return `
         <article class="product-card" data-breed="${product.breed}" data-id="${product.id}">
           <div class="product-image-wrap" data-open-modal="${product.id}">
-            <picture>
-              <source srcset="${product.image.replace(/\.jpe?g$/i, '.webp')}" type="image/webp" />
-              <img class="product-image" src="${product.image}" alt="${product.breed}, ${product.type}, цвет ${product.color}" loading="lazy" />
-            </picture>
+            <img class="product-image" src="${product.image}" alt="${product.breed}, ${product.type}, цвет ${product.color}" loading="lazy" />
             <span class="status ${statusClass}">${statusText}</span>
           </div>
           <div class="product-body">
@@ -220,6 +217,16 @@ function renderProducts(filter = "all") {
       `;
     })
     .join("");
+
+  // Попробовать подставить WebP для карточек (если файл существует)
+  document.querySelectorAll(".product-image").forEach((img) => {
+    const webpSrc = img.src.replace(/\.jpe?g$/i, ".webp");
+    if (webpSrc !== img.src) {
+      const test = new Image();
+      test.onload = () => { img.src = webpSrc; };
+      test.src = webpSrc;
+    }
+  });
 
   document.querySelectorAll(".qty-button[data-action='decrease']").forEach((button) => {
     button.addEventListener("click", (e) => {
