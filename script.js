@@ -410,7 +410,7 @@ function renderCart() {
   if (cart.length === 0) {
     cartItems.innerHTML = "<p class=\"cart-empty\">Добавьте товары из ассортимента выше</p>";
     cartCount.textContent = "0";
-    cartTotal.textContent = "0";
+    cartTotal.textContent = "0 ₽";
     cartPreview.classList.remove("has-items");
     return;
   }
@@ -446,17 +446,66 @@ function renderCart() {
   cartTotal.innerHTML = `${totalWeight} г &mdash; <strong>${totalPrice} ₽</strong>`;
 }
 
-function updateOrderText() {
-  let order = "Здравствуйте.\nХочу заказать шерсть:\n\n";
-  cart.forEach((item) => {
-    order += `- ${item.name}: ${item.qty} шт. × ${item.price}₽ = ${item.qty * item.price}₽\n`;
-  });
+// Собирает финальный текст заказа для копирования/отправки в мессенджеры
+function buildOrderText() {
+  const customerNameValue = (customerName?.value || "").trim();
+  const commentValue = (orderText?.value || "").trim();
+  const deliveryValue = delivery?.value || "";
+  const deliveryPriceEl = document.querySelector("#deliveryPrice");
+  const deliveryPriceRaw = deliveryPriceEl?.value;
+  const deliveryPrice = Number.parseFloat(deliveryPriceRaw);
+
+  let text = "Здравствуйте.\n";
+  if (customerNameValue) {
+    text += `Меня зовут ${customerNameValue}.\n`;
+  }
+  text += "Хочу заказать шерсть:\n\n";
+
+  if (cart.length === 0) {
+    text += "(корзина пока пуста)\n\n";
+  } else {
+    cart.forEach((item) => {
+      const itemWeight = (item.weight || 500) * item.qty;
+      text += `- ${item.name}: ${item.qty} шт. × ${item.price} ₽ (${itemWeight} г) = ${item.qty * item.price} ₽\n`;
+    });
+  }
+
+  const totalWeight = cart.reduce((sum, item) => sum + item.qty * (item.weight || 500), 0);
   const totalPrice = cart.reduce((sum, item) => sum + item.qty * item.price, 0);
-  order += `\nИтого: ${cartTotal.textContent} — ${totalPrice}₽\n\n`;
+  text += `\nИтого: ${totalWeight} г — ${totalPrice} ₽\n`;
 
-  orderText.value = order;
+  if (deliveryValue) {
+    text += `\nДоставка: ${deliveryValue}`;
+    if (Number.isFinite(deliveryPrice) && deliveryPrice > 0) {
+      text += ` — ${deliveryPrice} ₽`;
+    }
+    text += "\n";
 
-  // Добавление полей доставки
+    // Дополнительные поля выбранной доставки (телефоны, адреса и т.д.)
+    if (deliveryTemplates[deliveryValue]) {
+      deliveryTemplates[deliveryValue].forEach(([id, label]) => {
+        const fieldEl = document.getElementById(id);
+        const value = (fieldEl?.value || "").trim();
+        if (value) {
+          text += `${label}: ${value}\n`;
+        }
+      });
+    }
+  }
+
+  if (Number.isFinite(deliveryPrice) && deliveryPrice > 0) {
+    text += `\nК оплате с доставкой: ${totalPrice + deliveryPrice} ₽\n`;
+  }
+
+  if (commentValue) {
+    text += `\nКомментарий: ${commentValue}\n`;
+  }
+
+  return text.trim();
+}
+
+function updateOrderText() {
+  // Перерисовать поля доставки в зависимости от выбранного способа
   const selectedDelivery = delivery.value;
   if (selectedDelivery && deliveryTemplates[selectedDelivery]) {
     deliveryFields.innerHTML = deliveryTemplates[selectedDelivery]
@@ -662,11 +711,11 @@ document.addEventListener("DOMContentLoaded", () => {
 
   // Обработчик для кнопки копирования
   document.querySelector("#copyOrder")?.addEventListener("click", () => {
-    copyToClipboard(orderText.value);
+    copyToClipboard(buildOrderText());
     showCopyNote("✓ Сообщение скопировано!");
   });
 
-  // Обработчик для очистки корзины
+  // Очистка корзины
   document.querySelector("#cartClear")?.addEventListener("click", () => {
     cart.length = 0;
     renderCart();
@@ -677,39 +726,39 @@ document.addEventListener("DOMContentLoaded", () => {
 
   document.querySelector("#whatsappOrder")?.addEventListener("click", (e) => {
     e.preventDefault();
-    const text = encodeURIComponent(orderText.value);
+    const text = encodeURIComponent(buildOrderText());
     window.open(`https://wa.me/79280761765?text=${text}`, '_blank');
   });
 
   document.querySelector("#vkOrder")?.addEventListener("click", (e) => {
     e.preventDefault();
-    copyToClipboard(orderText.value);
+    copyToClipboard(buildOrderText());
     showCopyNote("✓ Текст скопирован — вставьте в сообщение ВК");
     window.open("https://vk.ru/zolotoe_runo_07", '_blank');
   });
 
   document.querySelector("#telegramOrder")?.addEventListener("click", (e) => {
     e.preventDefault();
-    const text = encodeURIComponent(orderText.value);
+    const text = encodeURIComponent(buildOrderText());
     window.open(`https://t.me/OlesyaBachieva?text=${text}`, '_blank');
   });
 
   document.querySelector("#instagramOrder")?.addEventListener("click", (e) => {
     e.preventDefault();
-    copyToClipboard(orderText.value);
+    copyToClipboard(buildOrderText());
     showCopyNote("✓ Текст скопирован — вставьте в Direct Instagram");
     window.open("https://www.instagram.com/zolotoe_runo_07?igsh=MThrbmZyYmE3cXE5cQ==", '_blank');
   });
 
   document.querySelector("#bipOrder")?.addEventListener("click", (e) => {
     e.preventDefault();
-    copyToClipboard(orderText.value);
+    copyToClipboard(buildOrderText());
     showCopyNote("✓ Текст скопирован — напишите в BiP: +7 928 076-17-65");
   });
 
   document.querySelector("#maxOrder")?.addEventListener("click", (e) => {
     e.preventDefault();
-    copyToClipboard(orderText.value);
+    copyToClipboard(buildOrderText());
     showCopyNote("✓ Текст скопирован — напишите в MAX: +7 928 076-17-65");
     window.open("https://max.ru/u/f9LHodD0cOI5XDlDiDhUOZ56ovKXUoKEQWQUyjUgkGesT8l0F2yveBIUrwM", '_blank');
   });
@@ -718,8 +767,14 @@ document.addEventListener("DOMContentLoaded", () => {
     if (navigator.clipboard && navigator.clipboard.writeText) {
       navigator.clipboard.writeText(text);
     } else {
-      orderText.select();
+      const tempArea = document.createElement("textarea");
+      tempArea.value = text;
+      tempArea.style.position = "fixed";
+      tempArea.style.opacity = "0";
+      document.body.appendChild(tempArea);
+      tempArea.select();
       document.execCommand("copy");
+      document.body.removeChild(tempArea);
     }
   }
 
